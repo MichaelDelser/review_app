@@ -1,0 +1,15 @@
+<!-- src/app/sign-up/sign-up.component.html -->
+<mat-card>
+  <h2>Sign Up</h2>
+  <form (ngSubmit)="signUp()">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [(ngModel)]="user.email" name="email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="user.password" name="password">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Sign Up</button>
+  </form>
+</mat-card>
