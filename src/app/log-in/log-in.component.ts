@@ -17,17 +17,15 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent {
-  credentials = {
-    email: '',
-    password: ''
-  };
+    email: string = '';
+    password: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   logIn(): void {
-    this.authService.logIn(this.credentials).subscribe((response) => {
+    this.authService.logIn(this.email, this.password).subscribe((response) => {
       localStorage.setItem('token', response.token);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home']); // Redirect to home or dashboard
     });
   }
 }

@@ -17,15 +17,13 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-  user = {
-    email: '',
-    password: ''
-  };
+    email: string = '';
+    password: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   signUp(): void {
-    this.authService.signUp(this.user).subscribe(() => {
+    this.authService.signUp(this.email, this.password).subscribe(() => {
       this.router.navigate(['/login']);
     });
   }

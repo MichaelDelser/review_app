@@ -4,11 +4,11 @@
   <form (ngSubmit)="logIn()">
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput type="email" [(ngModel)]="credentials.email" name="email">
+      <input matInput type="email" [(ngModel)]="email" name="email">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput type="password" [(ngModel)]="credentials.password" name="password">
+      <input matInput type="password" [(ngModel)]="password" name="password">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Log In</button>
   </form>
