@@ -1,21 +1,27 @@
 const express = require('express');
 const connectDB = require('./config/config');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const authRoutes = require('./routes/authRoutes');
+const cors = require('cors');
+const authRoutes = require('./routes/auth');
+const moviesRoutes = require('./routes/movies');
+const reviewsRoutes = require('./routes/reviews');
+const usersRoutes = require('./routes/users');
+const reportsRoutes = require('./routes/reports');
 
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
 app.use(cors());
-
-// Routes
-app.use('/auth', authRoutes);
 
 // MongoDB connection
 connectDB();
 
+// Routes
+app.use('/auth', authRoutes);
+app.use('/movies', moviesRoutes);
+app.use('/reviews', reviewsRoutes);
+app.use('/users', usersRoutes);
+app.use('/reports', reportsRoutes);
 
 // Server
 const PORT = process.env.PORT || 3000;
