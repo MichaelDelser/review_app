@@ -1,15 +1,14 @@
 import { Routes } from '@angular/router';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { LogInComponent } from './log-in/log-in.component';
+import {ProtectedComponent} from "./protected/protected.component";
+import { AuthGuard } from './auth.guard'; // Import AuthGuard
 
 export const routes: Routes = [
-  { path: 'signup', loadComponent: () => import('./sign-up/sign-up.component').then(m => m.SignUpComponent) },
-  { path: 'login', loadComponent: () => import('./log-in/log-in.component').then(m => m.LogInComponent) },
-  { path: 'home', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
-];
-
-export const appRoutingProviders: any[] = [
-  provideRouter(routes),
-  provideHttpClient(withInterceptorsFromDi())
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'signup', component: SignUpComponent },
+  { path: 'login', component: LogInComponent },
+  { path: 'protected', component: ProtectedComponent, canActivate: [AuthGuard] }  // Protected route example
 ];
