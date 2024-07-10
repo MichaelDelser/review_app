@@ -4,11 +4,13 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@ang
 import { routes } from './app/app.routes';
 import { provideRouter } from '@angular/router';
 import { AuthInterceptor } from './app/auth.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
