@@ -1,25 +1,29 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private token: string | null = null;
   private apiUrl = 'http://localhost:3000/auth'; // Replace with your actual API URL
+  private token: string | null = null;
 
-  constructor(private http: HttpClient) {
-    console.log('AuthService initialized');
-  }
+  constructor(private http: HttpClient) {}
 
   logIn(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { username, password });
+    return this.http.post(`${this.apiUrl}/login`, { username, password })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   signUp(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, { username, password });
+    return this.http.post(`${this.apiUrl}/signup`, { username, password })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   setToken(token: string): void {
@@ -36,5 +40,25 @@ export class AuthService {
 
   logout(): void {
     this.token = null;
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'Unknown error occurred';
+
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else if (error.error.errors) {
+      // Validation error
+      errorMessage = error.error.errors.map((err: any) => err.msg).join(', ');
+    } else if (error.error.msg) {
+      // Specific message from server
+      errorMessage = error.error.msg;
+    } else if (error.message) {
+      // General error message
+      errorMessage = `Error: ${error.message}`;
+    }
+
+    return throwError(errorMessage);
   }
 }

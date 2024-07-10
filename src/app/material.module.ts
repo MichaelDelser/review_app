@@ -1,14 +1,15 @@
-import { importProvidersFrom } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
-export const MaterialModule = [
-  importProvidersFrom(MatToolbarModule),
-  importProvidersFrom(MatButtonModule),
-  importProvidersFrom(MatCardModule),
-  importProvidersFrom(MatFormFieldModule),
-  importProvidersFrom(MatInputModule)
-];
+@NgModule({
+  exports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ]
+})
+export class MaterialModule {}

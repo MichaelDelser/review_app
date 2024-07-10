@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./sign-up.component.css'],
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -23,17 +25,25 @@ import { MatButtonModule } from '@angular/material/button';
 export class SignUpComponent {
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  signUp() {
+  signUp(): void {
     this.authService.signUp(this.username, this.password).subscribe({
-      next: response => {
-        this.authService.setToken(response.token);
-        this.router.navigate(['/']);
+      next: () => {
+        this.authService.logIn(this.username, this.password).subscribe({
+          next: (response) => {
+            this.authService.setToken(response.token);
+            this.router.navigate(['/home']);  // Navigate to the home screen
+          },
+          error: (error) => {
+            this.errorMessage = error;
+          }
+        });
       },
-      error: err => {
-        console.error('Error signing up', err);
+      error: (error) => {
+        this.errorMessage = error;
       }
     });
   }

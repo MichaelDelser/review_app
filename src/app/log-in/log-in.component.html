@@ -1,13 +1,17 @@
-<!-- src/app/log-in/log-in.component.html -->
 <mat-card>
   <h2>Log In</h2>
   <form (ngSubmit)="logIn()">
     <mat-form-field appearance="fill">
-      <input matInput type="email" placeholder="Email" [(ngModel)]="username" name="email">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" [(ngModel)]="username" name="username">
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password" name="password">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Log In</button>
   </form>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </mat-card>

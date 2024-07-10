@@ -2,4 +2,8 @@
 /* src/styles.css */
 @import '../node_modules/@angular/material/prebuilt-themes/azure-blue.css';
 
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
 
