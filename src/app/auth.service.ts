@@ -28,10 +28,11 @@ export class AuthService {
 
   setToken(token: string): void {
     this.token = token;
+    localStorage.setItem('token', token);
   }
 
   getToken(): string | null {
-    return this.token;
+    return this.token || localStorage.getItem('token');
   }
 
   isAuthenticated(): boolean {
@@ -40,6 +41,7 @@ export class AuthService {
 
   logout(): void {
     this.token = null;
+    localStorage.removeItem('token');
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
