@@ -1,8 +1,6 @@
-// src/app/sign-up/sign-up.component.ts
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,20 +9,32 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-sign-up',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.css'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ]
 })
 export class SignUpComponent {
-    email: string = '';
-    password: string = '';
+  username: string = '';
+  password: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  signUp(): void {
-    this.authService.signUp(this.email, this.password).subscribe(() => {
-      this.router.navigate(['/login']);
+  signUp() {
+    this.authService.signUp(this.username, this.password).subscribe({
+      next: response => {
+        this.authService.setToken(response.token);
+        this.router.navigate(['/']);
+      },
+      error: err => {
+        console.error('Error signing up', err);
+      }
     });
   }
 }

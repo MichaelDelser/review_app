@@ -1,15 +1,23 @@
-// src/app/app.component.ts
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from './material.module'; // Import the MaterialModule
+import { AuthService } from './auth.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterModule, MaterialModule], // Add MaterialModule to imports
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule, MatToolbarModule, MatButtonModule],
 })
 export class AppComponent {
-  title = 'auth-app';
+  title = 'review-app';
+
+  constructor(public authService: AuthService) {}
+
+  logout() {
+    this.authService.logout();
+  }
 }

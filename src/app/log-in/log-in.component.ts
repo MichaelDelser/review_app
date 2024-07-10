@@ -1,8 +1,6 @@
-// src/app/log-in/log-in.component.ts
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,21 +9,32 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-log-in',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css']
+  styleUrls: ['./log-in.component.css'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ]
 })
 export class LogInComponent {
-    email: string = '';
-    password: string = '';
+  username: string = '';
+  password: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  logIn(): void {
-    this.authService.logIn(this.email, this.password).subscribe((response) => {
-      localStorage.setItem('token', response.token);
-      this.router.navigate(['/home']); // Redirect to home or dashboard
+  logIn() {
+    this.authService.logIn(this.username, this.password).subscribe({
+      next: response => {
+        this.authService.setToken(response.token);
+        this.router.navigate(['/']);
+      },
+      error: err => {
+        console.error('Error logging in', err);
+      }
     });
   }
 }

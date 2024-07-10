@@ -1,11 +1,13 @@
-// src/main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-import { routes } from './app/app.routes'; // Import routes
 import { AppComponent } from './app/app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { appConfig } from './app/app.config';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { MaterialModule } from './app/material.module';
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routes), provideHttpClient()]
+  providers: [
+    provideAnimations(),
+    ...MaterialModule,
+    ...appConfig.providers
+  ]
 }).catch(err => console.error(err));

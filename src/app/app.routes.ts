@@ -1,12 +1,15 @@
-// src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { LogInComponent } from './log-in/log-in.component';
-import { HomeComponent } from './home/home.component';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 export const routes: Routes = [
-  { path: 'signup', component: SignUpComponent },
-  { path: 'login', component: LogInComponent },
-  { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: 'signup', loadComponent: () => import('./sign-up/sign-up.component').then(m => m.SignUpComponent) },
+  { path: 'login', loadComponent: () => import('./log-in/log-in.component').then(m => m.LogInComponent) },
+  { path: 'home', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
+];
+
+export const appRoutingProviders: any[] = [
+  provideRouter(routes),
+  provideHttpClient(withInterceptorsFromDi())
 ];

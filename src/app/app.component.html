@@ -1,9 +1,15 @@
-<!-- src/app/app.component.html -->
-<div>
-  <nav>
-    <a routerLink="/signup">Sign Up</a>
-    <a routerLink="/login">Log In</a>
-    <a routerLink="/home">Home</a>
-  </nav>
+<mat-toolbar color="primary">
+  <span>My Review App</span>
+  <span class="spacer"></span>
+  <ng-container *ngIf="!authService.isAuthenticated(); else loggedIn">
+    <a mat-button routerLink="/signup">Sign Up</a>
+    <a mat-button routerLink="/login">Log In</a>
+  </ng-container>
+  <ng-template #loggedIn>
+    <a mat-button (click)="logout()">Log Out</a>
+  </ng-template>
+  <a mat-button routerLink="/home">Home</a>
+</mat-toolbar>
+<div class="content">
   <router-outlet></router-outlet>
 </div>

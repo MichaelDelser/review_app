@@ -1,20 +1,14 @@
-// src/app/material.module.ts
-import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
+import { importProvidersFrom } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
-@NgModule({
-  exports: [
-    MatButtonModule,
-    MatInputModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatFormFieldModule
-  ]
-})
-export class MaterialModule {}
+export const MaterialModule = [
+  importProvidersFrom(MatToolbarModule),
+  importProvidersFrom(MatButtonModule),
+  importProvidersFrom(MatCardModule),
+  importProvidersFrom(MatFormFieldModule),
+  importProvidersFrom(MatInputModule)
+];
